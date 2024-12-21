@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+:root {
+    --primary-bg-color: hsl(226, 98%, 19%);
+    --secondary-bg-color: hsla(226, 98%, 19%, 0.5);
+    --primary-fg-color: hsl(0, 0%, 80%);
+    --secondary-fg-color: hsla(0, 0%, 80%, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Lexend", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    color: var(--primary-fg-color);
+    background-image: url("../img/background_main_1920_1080.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    z-index: 1000;
+    background-color: var(--primary-bg-color);
+}
+
+main {
+    min-height: calc(100vh - 150px - 50px);
+    margin-top: 150px;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: var(--secondary-bg-color);
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+h2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+a {
+    color: var(--secondary-fg-color);
+}
+
+h2 a {
+    text-decoration: none;
+}
+
+footer a {
+    text-decoration: underline;
+}
+
+header nav a {
+    height: 80%;
+    margin-left: 10px;
+}
+
+header nav a img {
+    height: 100%;
+}
+
+header nav ul li {
+    display: inline-block;
+    margin-right: 5vw;
+}
+
+main section {
+    width: 88vw;
+    margin: 0 auto;
+    min-height: calc(100vh - 150px - 50px);
+    padding: 20px 0;
+    display: flex;
+    gap: 2vw;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+article {
+    position: relative;
+    width: 20vw;
+    height: 40vh;
+    background-color: rgb(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+article>p {
+    margin: 10px 0 15px 0;
+    max-height: 50%;
+}
+
+article>img {
+    width: calc(100% - 20px);
+    width: 100%;
+}
+
+article>ul {
+    margin-top: 10px;
+    height: 10%;
+    list-style-type: none;
+}
+
+article>ul>li {
+    display: inline;
+    margin-right: 10px;
+}
+
+article>ul>li,
+article>ul>li>img {
+    height: 100%;
+}
+
+.truncate {
+    display: -webkit-box;
+    overflow: hidden;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
