@@ -122,6 +122,7 @@ $completedAt = htmlspecialchars(addslashes(trim($completedAt)));
  * ******************** [3] Screenshot file management
  */
 
+// FIXME: Error on JPEG MIME type detection
 $screenshotExt = ($screenshotType === IMAGETYPE_JPEG) ? 'jpg' : 'png';
 $screenshotFilename = pathinfo($screenshot['name'], PATHINFO_FILENAME);
 $finalFilename = uniqid() . '_' . $screenshotFilename . '.' . $screenshotExt;
