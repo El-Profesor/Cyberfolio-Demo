@@ -8,17 +8,17 @@ $success = [];
 /**
  * ******************** [1] Check if submitted form is valid
  */
-if ($_SERVER["REQUEST_METHOD"] === "GET") {
-  if (isset($_GET['id']) && trim($_GET['id']) !== '') { // Required project 'id' value
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  if (isset($_POST['id']) && trim($_POST['id']) !== '') { // Required project 'id' value
     // OK
     $filterOptions = [
       'options' => [
         'min_range' => 1,
       ],
     ];
-    if (filter_var($_GET['id'], FILTER_VALIDATE_INT, $filterOptions) !== FALSE) {
+    if (filter_var($_POST['id'], FILTER_VALIDATE_INT, $filterOptions) !== FALSE) {
       // OK
-      $idProject = $_GET['id'];
+      $idProject = $_POST['id'];
 
       /**
        * ******************** [2] Remove the corresponding record from database
@@ -53,12 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
           $errors['project_deletion'] = "La suppression du projet n'a pas pu aboutir : le projet n° $idProject n'existe pas ou a déjà été supprimé.";
           $_SESSION['errors'] = $errors;
         }
-        header('Location: project_list.php');
+        header('Location: project_index.php');
         exit;
       } catch (PDOException $e) {
         $errors['pdo'] = "Une erreur s'est produite lors de la suppression du projet de la base de données : veuillez contacter l'administrateur du site.";
-        $_SESSION['form_errors'] = $errors;
-        header('Location: project_add_form.php');
+        $_SESSION['errors'] = $errors;
+        header('Location: project_index.php');
         exit;
       }
     } else {
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     exit;
   }
 } else {
-  // KO: Suspicious request (request method is not GET)
+  // KO: Suspicious request (request method is not POST)
   header("Location: ../404.php");
   exit;
 }

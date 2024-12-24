@@ -23,7 +23,7 @@ include_once "admin_top.php";
   <?php
   }
   ?>
-  <form action="project_add.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate="">
+  <form action="project_new.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate="">
     <div class="row g-3">
 
       <div class="col-12">

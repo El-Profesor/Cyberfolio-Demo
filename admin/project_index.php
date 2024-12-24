@@ -6,7 +6,7 @@ include_once "admin_top.php";
 
 ?>
 <div class=""> <!-- MAIN CONTENT : SART -->
-  <h4 class="mb-3 d-flex justify-content-between"><span>Liste des projets</span><a href="project_add_form.php" title="Ajouter un nouveau projet" class="btn btn-primary"><i class="bi bi-plus-circle pe-2"></i>Nouveau projet</a></h4>
+  <h4 class="mb-3 d-flex justify-content-between"><span>Liste des projets</span><a href="project_new_form.php" title="Ajouter un nouveau projet" class="btn btn-primary"><i class="bi bi-plus-circle pe-2"></i>Nouveau projet</a></h4>
   <?php
   if (!empty($_SESSION['success'])) {
     $successList = '';
@@ -47,7 +47,7 @@ include_once "admin_top.php";
           <th scope="col">Description</th>
           <th scope="col">Screenshot</th>
           <th scope="col">Réalisé le</th>
-          <th scope="col">Action</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -62,6 +62,7 @@ include_once "admin_top.php";
           $connexion = new PDO("mysql:host=$host;dbname=$dbName", $user, $pass);
 
           $query = 'SELECT COUNT(*) FROM `project`';
+
           $results = $connexion->query($query);
           $resultsCount = $results->fetchColumn();
 
@@ -75,9 +76,9 @@ include_once "admin_top.php";
             foreach ($results as $row) {
               $tableRows .= '<tr><td class="align-middle text-truncate" style="max-width: 150px;">' . implode('</td><td class="align-middle text-truncate" style="max-width: 150px;">', array_map('stripslashes', $row)) . '</td>';
               $tableRows .= '<td>';
-              $tableRows .= '<button type="button" class="btn btn-primary btn-sm"><i class="bi bi-file-richtext"></i></button> ';
-              $tableRows .= '<button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-pen"></i></button> ';
-              $tableRows .= '<a href="project_delete.php?id=' . $row['id_project'] . '" title="Supprimer ce projet" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i></a>';
+              $tableRows .= '<a href="project_show.php?id=' . $row['id_project'] . '" title="Voir le détail de ce projet" class="btn btn-primary btn-sm me-1"><i class="bi bi-file-richtext"></i></a>';
+              $tableRows .= '<a href="project_update_form.php?id=' . $row['id_project'] . '" title="Modifier ce projet" class="btn btn-secondary btn-sm me-1"><i class="bi bi-pen"></i></a>';
+              $tableRows .= '<a href="project_delete_form.php?id=' . $row['id_project'] . '" title="Supprimer ce projet" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i></a>';
               $tableRows .= '</td></tr>' . PHP_EOL;
             }
           }
@@ -93,7 +94,7 @@ include_once "admin_top.php";
       </tbody>
     </table>
   </div>
-</div>
+</div> <!-- MAIN CONTENT : END -->
 <?php
 
 include_once "admin_bottom.php";
