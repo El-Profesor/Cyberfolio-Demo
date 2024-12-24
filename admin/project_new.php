@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 if (!empty($errors)) {
   $_SESSION['form_errors'] = $errors;
-  header('Location: project_add_form.php');
+  header('Location: project_new_form.php');
   exit;
 }
 
@@ -133,7 +133,7 @@ if ($copySucceed !== TRUE) { // File copy into 'public/uploads/' folder failed
   // KO
   $errors['file_upload'] = "Une erreur s'est produite lors de l'<i>upload</i> du fichier '<i>Screenshot</i> associé' : veuillez contacter l'administrateur du site.";
   $_SESSION['form_errors'] = $errors;
-  header('Location: project_add_form.php');
+  header('Location: project_new_form.php');
   exit;
 }
 
@@ -169,11 +169,11 @@ try {
 
   $success['project_creation'] = "La création du nouveau projet a réussi.";
   $_SESSION['success'] = $success;
-  header('Location: project_list.php');
+  header('Location: project_index.php');
   exit;
 } catch (PDOException $e) {
   $errors['pdo'] = "Une erreur s'est produite lors de l'enregistrement du projet en base de données : veuillez contacter l'administrateur du site.";
   $_SESSION['form_errors'] = $errors;
-  header('Location: project_add_form.php');
+  header('Location: project_new_form.php');
   exit;
 }

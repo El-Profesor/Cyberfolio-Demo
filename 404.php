@@ -9,8 +9,12 @@ header($_SERVER["SERVER_PROTOCOL"] . " 404 - La page demandée n'a pas été tro
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code de statut de réponse HTTP : 404 - La page demandée n'a pas été trouvée sur notre serveur</title>
+    <link rel="stylesheet" href="assets/css/404.css">
 </head>
 <body>
-    <h1>Code statut HTTP 404 - La page demandée n'a pas été trouvée sur notre serveur</h1>
+    <div>
+    <h1>Erreur 404</h1>
+    <p>Code de statut de réponse HTTP : 404.<br>La page demandée n'a pas été trouvée sur notre serveur.<br><a href="index.php" title="Revenir en page d'accueil">Revenir en page d'accueil</a></p>
+    </div>
 </body>
 </html>
