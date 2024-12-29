@@ -16,24 +16,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         'min_range' => 1,
       ],
     ];
-    if (filter_var($_POST['id'], FILTER_VALIDATE_INT, $filterOptions) !== FALSE) {
+    if (filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT, $filterOptions) !== FALSE) { // Another way to validate input data... (Read « The PHP Manual »)
       // OK
-      $idProject = $_POST['id'];
+      $idProject = (int) $_POST['id'];
 
       /**
        * ******************** [2] Remove the corresponding record from database
        */
 
+      // FIXME: Secure db connexion paramters
       $host = 'localhost';
-      $dbName = 'cyberfolio';
-      $user = 'mentor';
-      $pass = 'superMentor';
+      $dbName = 'cyberfolio_demo';
+      $user = 'mentor'; // Your MySQL user username
+      $pass = 'superMentor'; // Your MySQL user password
 
       try {
         $connexion = new PDO("mysql:host=$host;dbname=$dbName", $user, $pass);
         $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query  = 'DELETE FROM `project` WHERE `id_project`=:id_project';
+        $query  = 'DELETE FROM `project` WHERE `id_project` = :id_project';
 
         $queryValues = [
           ':id_project' => $idProject,
@@ -46,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $connexion = null;
 
         if ($isDeleted) {
-          // TODO: Remove project screenshot image from 'uploads' folder
+          // TODO: Remove screenshot file from 'uploads' folder
           $success['project_deletion'] = "La suppression du projet a réussi.";
           $_SESSION['success'] = $success;
         } else {
@@ -56,6 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header('Location: project_index.php');
         exit;
       } catch (PDOException $e) {
+        $connexion = null;
+
         $errors['pdo'] = "Une erreur s'est produite lors de la suppression du projet de la base de données : veuillez contacter l'administrateur du site.";
         $_SESSION['errors'] = $errors;
         header('Location: project_index.php');
@@ -73,6 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   }
 } else {
   // KO: Suspicious request (request method is not POST)
-  header("Location: ../404.php");
+  header("Location: ../405.php");
   exit;
 }

@@ -1,3 +1,54 @@
+<?php
+
+/**
+ * ******************** [1] Get all records from database
+ */
+
+// FIXME: Secure db connexion paramters
+$host = 'localhost';
+$dbName = 'cyberfolio_demo';
+$user = 'mentor'; // Your MySQL user username
+$pass = 'superMentor'; // Your MySQL user password
+$projectCards = '';
+$emptyProject = '<article class="empty-project"><div>Aucun projet à afficher</div></article>' . PHP_EOL;
+
+try {
+    $connexion = new PDO("mysql:host=$host;dbname=$dbName", $user, $pass);
+
+    $query = 'SELECT COUNT(*) FROM `project`';
+
+    $results = $connexion->query($query);
+    $resultsCount = $results->fetchColumn();
+
+    if ($resultsCount === 0) {
+        $projectCards = $emptyProject;
+    } else {
+        $query = 'SELECT `id_project`, `title`, `summary`, `description`, `screenshot`, `completed_at` FROM `project`';
+
+        $results = $connexion->query($query, PDO::FETCH_ASSOC);
+
+        foreach ($results as $row) {
+            $projectCards .= '<article>' . PHP_EOL;
+            $projectCards .= '<h2>' . $row['title'] . '<a href="#"><i class="light-icon-external-link"></i></a></h2>' . PHP_EOL;
+            $projectCards .= '<p class="truncate">' . $row['description'] . '</p>' . PHP_EOL;
+            $projectCards .= '<img src="public/uploads/' . $row['screenshot'] . '" alt="Screenshot du projet \'' . $row['title'] . '\'">' . PHP_EOL;
+            $projectCards .= '<ul>' . PHP_EOL;
+            $projectCards .= '<li><img src="public/uploads/html_logo.svg" alt="Logo technologie HTML"></li>' . PHP_EOL;
+            $projectCards .= '<li><img src="public/uploads/css_logo.svg" alt="Logo technologie CSS"></li>' . PHP_EOL;
+            $projectCards .= '<li><img src="public/uploads/javascript_logo.svg" alt="Logo technologie JavaScript"></li>' . PHP_EOL;
+            $projectCards .= '<li><img src="public/uploads/php_logo.svg" alt="Logo technologie PHP"></li>' . PHP_EOL;
+            $projectCards .= '<li><img src="public/uploads/mysql_logo.svg" alt="Logo technologie MySQL"></li>' . PHP_EOL;
+            $projectCards .= '</ul>' . PHP_EOL;
+            $projectCards .= '</article>' . PHP_EOL;
+        }
+    }
+} catch (PDOException $e) {
+    $projectCards = $emptyProject;
+} finally {
+    $connexion = null;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -25,90 +76,11 @@
     </header>
     <main>
         <section id="projects">
-            <article>
-                <h2>Projet n°1<a href="#"><i class="light-icon-external-link"></i></a></h2>
-                <p class="truncate">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet nulla tristique, porta
-                    metus ultrices, sodales nibh. Nulla sit amet commodo sapien. Curabitur ut nunc lobortis, rutrum nisl
-                    a, ornare erat.</p>
-                <img src="public/uploads/projet_1.jpg" alt="Screenshot page d'accueil du projet n°1">
-                <ul>
-                    <li><img src="public/uploads/html_logo.svg" alt="Logo technologie HTML"></li>
-                    <li><img src="public/uploads/css_logo.svg" alt="Logo technologie CSS"></li>
-                    <li><img src="public/uploads/javascript_logo.svg" alt="Logo technologie JavaScript"></li>
-                    <li><img src="public/uploads/php_logo.svg" alt="Logo technologie PHP"></li>
-                    <li><img src="public/uploads/mysql_logo.svg" alt="Logo technologie MySQL"></li>
-                </ul>
-            </article>
-            <article>
-                <h2>Projet n°2<a href="#"><i class="light-icon-external-link"></i></a></h2>
-                <p class="truncate">Curabitur ut nunc lobortis, rutrum nisl a, ornare erat. Proin finibus lorem nisl, sed accumsan urna
-                    blandit nec. Vivamus dui lorem, gravida at vestibulum quis, luctus tincidunt lacus. Nulla sit amet
-                    commodo sapien.</p>
-                <img src="public/uploads/projet_2.jpg" alt="Screenshot page d'accueil du projet n°2">
-                <ul>
-                    <li><img src="public/uploads/html_logo.svg" alt="Logo technologie HTML"></li>
-                    <li><img src="public/uploads/css_logo.svg" alt="Logo technologie CSS"></li>
-                    <li><img src="public/uploads/javascript_logo.svg" alt="Logo technologie JavaScript"></li>
-                    <li><img src="public/uploads/php_logo.svg" alt="Logo technologie PHP"></li>
-                    <li><img src="public/uploads/mysql_logo.svg" alt="Logo technologie MySQL"></li>
-                </ul>
-            </article>
-            <article>
-                <h2>Projet n°3<a href="#"><i class="light-icon-external-link"></i></a></h2>
-                <p class="truncate">Nulla sit amet commodo sapien. Curabitur ut nunc lobortis, rutrum nisl a, ornare erat. Proin finibus
-                    lorem nisl, sed accumsan urna blandit nec. Vivamus dui lorem, gravida at vestibulum quis, luctus
-                    tincidunt lacus.</p>
-                <img src="public/uploads/projet_3.jpg" alt="Screenshot page d'accueil du projet n°3">
-                <ul>
-                    <li><img src="public/uploads/html_logo.svg" alt="Logo technologie HTML"></li>
-                    <li><img src="public/uploads/css_logo.svg" alt="Logo technologie CSS"></li>
-                    <li><img src="public/uploads/javascript_logo.svg" alt="Logo technologie JavaScript"></li>
-                    <li><img src="public/uploads/php_logo.svg" alt="Logo technologie PHP"></li>
-                    <li><img src="public/uploads/mysql_logo.svg" alt="Logo technologie MySQL"></li>
-                </ul>
-            </article>
-            <article>
-                <h2>Projet n°4<a href="#"><i class="light-icon-external-link"></i></a></h2>
-                <p class="truncate">Vivamus dui lorem, gravida at vestibulum quis, luctus tincidunt lacus. Nulla vestibulum diam eget
-                    tellus semper, pulvinar consequat justo aliquet. Gravida at vestibulum quis, luctus tincidunt lacus.
-                </p>
-                <img src="public/uploads/projet_4.jpg" alt="Screenshot page d'accueil du projet n°4">
-                <ul>
-                    <li><img src="public/uploads/html_logo.svg" alt="Logo technologie HTML"></li>
-                    <li><img src="public/uploads/css_logo.svg" alt="Logo technologie CSS"></li>
-                    <li><img src="public/uploads/javascript_logo.svg" alt="Logo technologie JavaScript"></li>
-                    <li><img src="public/uploads/php_logo.svg" alt="Logo technologie PHP"></li>
-                    <li><img src="public/uploads/mysql_logo.svg" alt="Logo technologie MySQL"></li>
-                </ul>
-            </article>
-            <article>
-                <h2>Projet n°5<a href="#"><i class="light-icon-external-link"></i></a></h2>
-                <p class="truncate">Curabitur ut nunc lobortis, rutrum nisl a, ornare erat. Proin finibus lorem nisl, sed accumsan urna
-                    blandit nec. Sed accumsan urna blandit nec. Vivamus dui lorem, gravida at vestibulum quis, luctus
-                    tincidunt lacus.</p>
-                <img src="public/uploads/projet_5.jpg" alt="Screenshot page d'accueil du projet n°5">
-                <ul>
-                    <li><img src="public/uploads/html_logo.svg" alt="Logo technologie HTML"></li>
-                    <li><img src="public/uploads/css_logo.svg" alt="Logo technologie CSS"></li>
-                    <li><img src="public/uploads/javascript_logo.svg" alt="Logo technologie JavaScript"></li>
-                    <li><img src="public/uploads/php_logo.svg" alt="Logo technologie PHP"></li>
-                    <li><img src="public/uploads/mysql_logo.svg" alt="Logo technologie MySQL"></li>
-                </ul>
-            </article>
-            <article>
-                <h2>Projet n°6<a href="#"><i class="light-icon-external-link"></i></a></h2>
-                <p class="truncate">Proin finibus lorem nisl. Curabitur ut nunc lobortis, rutrum nisl a, ornare erat. Proin finibus
-                    lorem nisl, sed accumsan urna blandit nec. Gravida at vestibulum quis, luctus tincidunt lacus.
-                </p>
-                <img src="public/uploads/projet_6.jpg" alt="Screenshot page d'accueil du projet n°6">
-                <ul>
-                    <li><img src="public/uploads/html_logo.svg" alt="Logo technologie HTML"></li>
-                    <li><img src="public/uploads/css_logo.svg" alt="Logo technologie CSS"></li>
-                    <li><img src="public/uploads/javascript_logo.svg" alt="Logo technologie JavaScript"></li>
-                    <li><img src="public/uploads/php_logo.svg" alt="Logo technologie PHP"></li>
-                    <li><img src="public/uploads/mysql_logo.svg" alt="Logo technologie MySQL"></li>
-                </ul>
-            </article>
+            <?php
+
+            echo $projectCards;
+
+            ?>
         </section>
     </main>
     <footer>
