@@ -13,11 +13,14 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         'min_range' => 1,
       ],
     ];
-    if (filter_var($_GET['id'], FILTER_VALIDATE_INT, $filterOptions) !== FALSE) {
+    if (filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, $filterOptions) !== FALSE) { // Another way to validate input data... (Read « The PHP Manual »)
       // OK
-      $idProject = $_GET['id'];
+      $idProject = (int) $_GET['id'];
+
+      // TODO: Check if a project with such an 'id' exists (optional)
 
       include_once "admin_top.php";
+
 ?>
       <div class="col-md-7 col-lg-8 mx-auto"> <!-- MAIN CONTENT : SART -->
         <h4 class="mb-3">Formulaire de suppression d'un projet</h4>
@@ -38,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         </form>
       </div> <!-- MAIN CONTENT : END -->
 <?php
+
       include_once "admin_bottom.php";
 
     } else {
@@ -52,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   }
 } else {
   // KO: Suspicious request (request method is not GET)
-  header("Location: ../404.php");
+  header("Location: ../405.php");
   exit;
 }
 

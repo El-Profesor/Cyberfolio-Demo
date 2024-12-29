@@ -8,12 +8,14 @@ include_once "admin_top.php";
 <div class="col-md-7 col-lg-8 mx-auto"> <!-- MAIN CONTENT : SART -->
   <h4 class="mb-3">Formulaire de création d'un projet</h4>
   <?php
+
   if (!empty($_SESSION['form_errors'])) {
     $errorsList = '';
     foreach ($_SESSION['form_errors'] as $errorMsg) {
       $errorsList .= '<li>' . $errorMsg . '</li>';
     }
     unset($_SESSION['form_errors']);
+
   ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>Le formulaire contient des erreurs :</strong>
@@ -21,7 +23,9 @@ include_once "admin_top.php";
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <?php
+
   }
+
   ?>
   <form action="project_new.php" method="post" enctype="multipart/form-data" class="needs-validation" novalidate="">
     <div class="row g-3">
@@ -44,7 +48,7 @@ include_once "admin_top.php";
 
       <div class="col-12">
         <label for="description" class="form-label">Description <span class="text-body-secondary">(optionnel)</span></label>
-        <textarea type="text" class="form-control" id="description" name="description" placeholder="Description complète du projet" rows="4"></textarea>
+        <textarea class="form-control" id="description" name="description" placeholder="Description complète du projet" rows="4"></textarea>
         <div class="invalid-feedback">
           <!-- No feedback -->
         </div>
@@ -69,6 +73,7 @@ include_once "admin_top.php";
 
     <hr class="my-4">
 
+    <!-- TODO: Replace the following button with an input (type="submit") ? -->
     <button class="w-100 btn btn-primary btn-lg" type="submit">Enregistrer le nouveau projet</button>
   </form>
 </div> <!-- MAIN CONTENT : END -->

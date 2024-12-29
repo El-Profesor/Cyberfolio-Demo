@@ -16,25 +16,26 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         'min_range' => 1,
       ],
     ];
-    if (filter_var($_GET['id'], FILTER_VALIDATE_INT, $filterOptions) !== FALSE) {
+    if (filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, $filterOptions) !== FALSE) { // Another way to validate input data... (Read « The PHP Manual »)
       // OK
-      $idProject = $_GET['id'];
+      $idProject = (int) $_GET['id'];
 
       /**
-       * ******************** [2] Remove the corresponding record from database
+       * ******************** [2] Get the corresponding record from database
        */
 
+      // FIXME: Secure db connexion paramters
       $host = 'localhost';
-      $dbName = 'cyberfolio';
-      $user = 'mentor';
-      $pass = 'superMentor';
+      $dbName = 'cyberfolio_demo';
+      $user = 'mentor'; // Your MySQL user username
+      $pass = 'superMentor'; // Your MySQL user password
 
       try {
         $connexion = new PDO("mysql:host=$host;dbname=$dbName", $user, $pass);
         $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $query  = 'SELECT COUNT(*) FROM `project` ';
-        $query .= 'WHERE `id_project`=:id_project';
+        $query .= 'WHERE `id_project` = :id_project';
 
         $queryValues = [
           ':id_project' => $idProject,
@@ -45,6 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         $resultCount = $statement->fetchColumn();
 
         if ($resultCount === 0) {
+          $connexion = null;
+
           $errors['project_details'] = "Le détail du projet n'est pas disponible : le projet n° $idProject n'existe pas ou a été supprimé.";
           $_SESSION['errors'] = $errors;
           header('Location: project_index.php');
@@ -52,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         } else {
           $query  = 'SELECT `id_project`, `title`, `summary`, `description`, `screenshot`, `completed_at` ';
           $query .= 'FROM `project` ';
-          $query .= 'WHERE `id_project`=:id_project';
+          $query .= 'WHERE `id_project` = :id_project';
 
           $statement = $connexion->prepare($query);
           $result = $statement->execute($queryValues);
@@ -67,19 +70,21 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
           $tableRows .= '<tr><th class="align-middle">Réalisé le</th><td>' . $row['completed_at'] . '</td></tr>' . PHP_EOL;
           $tableRows .= '<tr><th class="align-middle">Actions</th><td>';
           $tableRows .= '<a href="project_update_form.php?id=' . $row['id_project'] . '" title="Modifier ce projet" class="btn btn-secondary btn-sm me-1"><i class="bi bi-pen"></i></a>';
-              $tableRows .= '<a href="project_delete_form.php?id=' . $row['id_project'] . '" title="Supprimer ce projet" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i></a>';
+          $tableRows .= '<a href="project_delete_form.php?id=' . $row['id_project'] . '" title="Supprimer ce projet" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i></a>';
           $tableRows .= '</td></tr>' . PHP_EOL;
+        
+          $connexion = null;
         }
       } catch (PDOException $e) {
-        echo $query;
-        exit($e);
+        $connexion = null;
+        
         $errors['pdo'] = "Une erreur s'est produite lors de la récupération du projet en base de données : veuillez contacter l'administrateur du site.";
         $_SESSION['errors'] = $errors;
         header('project_index.php');
         exit;
       }
     } else {
-      // KO: Suspicious request (project 'id' is not an integer positive value)
+      // KO: Suspicious request (project 'id' is not a positive integer value)
       header("Location: ../404.php");
       exit;
     }
@@ -90,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   }
 } else {
   // KO: Suspicious request (request method is not GET)
-  header("Location: ../404.php");
+  header("Location: ../405.php");
   exit;
 }
 
