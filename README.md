@@ -1,7 +1,6 @@
 # Cyberfolio - Démo
 
 <!-- TOC -->
-Sommaire
 - [Cyberfolio - Démo](#cyberfolio---démo)
   - [IMPORTANT : Notes préalables](#important--notes-préalables)
   - [Installation du projet](#installation-du-projet)
@@ -21,10 +20,10 @@ Sommaire
 - Présence de commentaires spéciaux :
   - `// FIXME:` Détails à implémenter en priorité
   - `// TODO:` Détails à implémenter d'ordre secondaire
-- **Authentification et autorisations non implémentées** dans cet exemple (à traiter)
-- Token CSRF **non implémenté** (à traiter)
-- Branche du dépôt GitHub par défaut : `develop` (version à jour)
-- Le back-office s'appuie sur le *toolkit* [Bootstrap](https://getbootstrap.com/) pour ce qui est du CSS
+- **Authentification et autorisations non implémentées** dans cette version (à vous de jouer)
+- **Token CSRF non implémenté** dans cette version (à vous de jouer)
+- Branche du dépôt GitHub par défaut : `develop` (dernière version à jour)
+- La mise en forme du *back-office* s'appuie sur le *toolkit* [Bootstrap](https://getbootstrap.com/) pour ce qui est du CSS
 - Quelques erreurs et/ou approximations doivent traîner : ne pas hésiter à me les signaler 
 
 ## Installation du projet
@@ -54,7 +53,7 @@ $pass = 'superMentor'; // Your MySQL user password
 ### Vérification de l'installation
 
 - *Front-office* : [http://localhost/cyberfolio_demo/](http://localhost/cyberfolio_demo/ "Accès au front-office")
-- *Front-office* : [http://localhost/cyberfolio_demo/admin/](http://localhost/cyberfolio_demo/admin/ "Accès au back-office")
+- *Back-office* : [http://localhost/cyberfolio_demo/admin/](http://localhost/cyberfolio_demo/admin/ "Accès au back-office")
 
 ## Modèle Conceptuel des Données (MCD)
 
@@ -72,4 +71,4 @@ Ou *« schéma relationnel »* :
 
 Idée générale :
 
-![Traitement de données entrantes](stuff/input_validation.drawio.svg "Traitement de données entrantes")
+![Traitement des données entrantes](stuff/input_validation.drawio.svg "Traitement des données entrantes")

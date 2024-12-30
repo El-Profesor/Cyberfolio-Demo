@@ -9,7 +9,7 @@ $success = [];
  * ******************** [1] Get all records from database
  */
 
-// FIXME: Secure db connexion paramters
+// FIXME: Secure db connexion parameters
 $host = 'localhost';
 $dbName = 'cyberfolio_demo';
 $user = 'mentor'; // Your MySQL user username

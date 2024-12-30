@@ -4,7 +4,7 @@
  * ******************** [1] Get all records from database
  */
 
-// FIXME: Secure db connexion paramters
+// FIXME: Secure db connexion parameters
 $host = 'localhost';
 $dbName = 'cyberfolio_demo';
 $user = 'mentor'; // Your MySQL user username
@@ -29,7 +29,7 @@ try {
 
         foreach ($results as $row) {
             $projectCards .= '<article>' . PHP_EOL;
-            $projectCards .= '<h2>' . $row['title'] . '<a href="#"><i class="light-icon-external-link"></i></a></h2>' . PHP_EOL;
+            $projectCards .= '<h2>' . $row['title'] . '<a href="#" title=""><i class="light-icon-external-link"></i></a></h2>' . PHP_EOL;
             $projectCards .= '<p class="truncate">' . $row['description'] . '</p>' . PHP_EOL;
             $projectCards .= '<img src="public/uploads/' . $row['screenshot'] . '" alt="Screenshot du projet \'' . $row['title'] . '\'">' . PHP_EOL;
             $projectCards .= '<ul>' . PHP_EOL;
@@ -63,7 +63,7 @@ try {
 <body>
     <header>
         <nav>
-            <a href="." alt="Accueil"><img src="assets/img/guardia_cs_logo.svg"></a>
+            <a href="#" alt="Accueil"><img src="assets/img/guardia_cs_logo.svg"></a>
             <h1>John Doe - Développeur Web full-stack</h1>
             <ul>
                 <li>Accueil</li>
@@ -84,8 +84,8 @@ try {
         </section>
     </main>
     <footer>
-        <p>© 2024 - John Doe. Tous droits réservés. <a>Mentions légales</a> | <a>C.G.U.</a>
-            | <a>C.G.V.</a></p>
+        <p>© 2024 - John Doe. Tous droits réservés. <a href="#" title="">Mentions légales</a> | <a href="#" title="">C.G.U.</a>
+            | <a href="#" title="">C.G.V.</a></p>
     </footer>
 </body>
 
