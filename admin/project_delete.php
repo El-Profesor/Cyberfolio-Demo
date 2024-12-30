@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
        * ******************** [2] Remove the corresponding record from database
        */
 
-      // FIXME: Secure db connexion paramters
+      // FIXME: Secure db connexion parameters
       $host = 'localhost';
       $dbName = 'cyberfolio_demo';
       $user = 'mentor'; // Your MySQL user username

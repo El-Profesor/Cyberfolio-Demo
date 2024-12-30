@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // Is method allowed ?
         $screenshotFileType = $imgInfo[2];
         if (($screenshotFileType === IMAGETYPE_JPEG) || ($screenshotFileType === IMAGETYPE_PNG)) { // Image format allowed types (JPEG or PNG)
           // OK
-          if (strlen(pathinfo(trim($screenshot['name']), PATHINFO_FILENAME)) <= 237) { // 255 - 13 (uniqid()) - 1 (underscore) - 1 (dot) - 3 (extension)
+          if (strlen(pathinfo(trim($_FILES['screenshot']['name']), PATHINFO_FILENAME)) <= 237) { // 255 - 13 (uniqid()) - 1 (underscore) - 1 (dot) - 3 (extension)
             // OK
             $screenshot = $_FILES['screenshot'];
           } else {
@@ -141,7 +141,7 @@ if ($copySucceed !== TRUE) { // File copy into 'public/uploads/' folder failed
  * ******************** [4] Create the corresponding record in database
  */
 
-// FIXME: Secure db connexion paramters
+// FIXME: Secure db connexion parameters
 $host = 'localhost';
 $dbName = 'cyberfolio_demo';
 $user = 'mentor'; // Your MySQL user username
